@@ -2,10 +2,10 @@
 
 ## Team Members:
 
-* 
-* 
-* 
-* 
+* Henry
+* Jon
+* Justin
+* Logan
 
 ## User stories
 
