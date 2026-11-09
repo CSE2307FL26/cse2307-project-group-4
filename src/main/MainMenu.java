@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 2;
+    private static final int EXIT_SELECTION = 3;
+    private static final int MAX_SELECTION = 3;
 
-	private BankAccount userAccount;
+    private BankAccount userAccount;
     private Scanner keyboardInput;
 
     public MainMenu() {
@@ -17,15 +17,16 @@ public class MainMenu {
 
     public void displayOptions() {
         System.out.println("Welcome to the 237 Bank App!");
-        
+
         System.out.println("1. Make a deposit");
-        System.out.println("2. Exit the app");
+        System.out.println("2. Make a withdrawal");
+        System.out.println("3. Exit the app");
 
     }
 
     public int getUserSelection(int max) {
         int selection = -1;
-        while(selection < 1 || selection > max) {
+        while (selection < 1 || selection > max) {
             System.out.print("Please make a selection: ");
             selection = keyboardInput.nextInt();
         }
@@ -36,21 +37,40 @@ public class MainMenu {
         switch (selection) {
             case 1:
                 performDeposit();
+                break;
+            case 2:
+                performWithdrawal();
+                break;
         }
     }
 
     public void performDeposit() {
         double depositAmount = -1;
-        while(depositAmount < 0) {
+        while (depositAmount < 0) {
             System.out.print("How much would you like to deposit: ");
             depositAmount = keyboardInput.nextInt();
         }
         userAccount.deposit(depositAmount);
     }
 
+    public void performWithdrawal() {
+        double withdrawalAmount = -1;
+
+        while (withdrawalAmount <= 0) {
+            System.out.print("How much would you like to withdraw: ");
+            withdrawalAmount = keyboardInput.nextDouble();
+        }
+
+        try {
+            userAccount.withdraw(withdrawalAmount);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Withdrawal must be positive and cannot exceed the current balance.");
+        }
+    }
+
     public void run() {
         int selection = -1;
-        while(selection != EXIT_SELECTION) {
+        while (selection != EXIT_SELECTION) {
             displayOptions();
             selection = getUserSelection(MAX_SELECTION);
             processInput(selection);
