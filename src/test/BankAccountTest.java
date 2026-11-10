@@ -23,7 +23,21 @@ public class BankAccountTest {
             testAccount.deposit(-50);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+            // do nothing, test passes
         }
+    }
+
+    @Test
+    public void testInitialBalance() {
+        BankAccount testAccount = new BankAccount();
+        assertEquals(0, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testMultipleDeposits() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(50);
+        testAccount.deposit(25);
+        assertEquals(75, testAccount.getBalance(), 0.01);
     }
 }
