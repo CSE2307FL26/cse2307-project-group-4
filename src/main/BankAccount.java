@@ -19,4 +19,15 @@ public class BankAccount {
     public double getBalance() {
         return this.balance;
     }
+
+    public void transfer(double amount, BankAccount destination) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Transfer amount must be positive.");
+        }
+        if (amount > this.balance) {
+            throw new IllegalArgumentException("Insufficient funds for transfer.");
+        }
+        this.balance -= amount;
+        destination.deposit(amount);
+    }
 }
