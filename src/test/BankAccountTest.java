@@ -27,6 +27,7 @@ public class BankAccountTest {
             //do nothing, test passes
         }
     }
+
     @Test
     public void testCollectFee() {
         BankAccount account = new BankAccount();
