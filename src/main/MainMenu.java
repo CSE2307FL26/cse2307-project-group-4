@@ -4,14 +4,16 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 2;
+    private static final int EXIT_SELECTION = 3;
+	private static final int MAX_SELECTION = 3;
 
+    private BankUser user;
 	private BankAccount userAccount;
     private Scanner keyboardInput;
 
     public MainMenu() {
-        this.userAccount = new BankAccount();
+        this.user = new BankUser();
+        this.userAccount = user.getAccount(0);
         this.keyboardInput = new Scanner(System.in);
     }
 
@@ -19,7 +21,8 @@ public class MainMenu {
         System.out.println("Welcome to the 237 Bank App!");
         
         System.out.println("1. Make a deposit");
-        System.out.println("2. Exit the app");
+        System.out.println("2. Create an additional account");
+        System.out.println("3. Exit the app");
 
     }
 
@@ -36,6 +39,11 @@ public class MainMenu {
         switch (selection) {
             case 1:
                 performDeposit();
+                break;
+
+            case 2:
+                performCreateAccount();
+                break;
         }
     }
 
@@ -46,6 +54,14 @@ public class MainMenu {
             depositAmount = keyboardInput.nextInt();
         }
         userAccount.deposit(depositAmount);
+    }
+
+    public void performCreateAccount() {
+        user.createAccount();
+
+        System.out.println("Account created successfully!");
+        System.out.println("You now have "
+            + user.getAccountNumber() + " accounts.");
     }
 
     public void run() {
