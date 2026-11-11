@@ -15,7 +15,14 @@ public class BankAccount {
             throw new IllegalArgumentException();
         }
     }
+    public void addInterest(double amount) {
+        if (!Double.isFinite(amount) || amount <= 0) {
+            throw new IllegalArgumentException(
+                    "Interest must be a positive, finite amount.");
+        }
 
+        balance += amount;
+    }
     public double getBalance() {
         return this.balance;
     }
