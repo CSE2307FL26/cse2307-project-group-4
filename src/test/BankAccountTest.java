@@ -103,6 +103,7 @@ public class BankAccountTest {
         }
     }
   
+    @Test
     public void testCollectFee() {
         BankAccount account = new BankAccount();
         account.deposit(100);
@@ -150,7 +151,8 @@ public class BankAccountTest {
             assertEquals(100, account.getBalance(), 0.001);
         }
     }
-  
+    
+    @Test
     public void testSuccessfulTransfer() {
         BankAccount sourceAccount = new BankAccount();
         BankAccount destinationAccount = new BankAccount();

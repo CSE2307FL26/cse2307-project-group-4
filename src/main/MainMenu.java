@@ -83,10 +83,6 @@ public class MainMenu {
         }
         userAccount.deposit(depositAmount);
     }
-
-    public void performInterestPayment() {
-        System.out.print("Enter the interest payment amount: ");
-    }
   
     public void performFeeCollection() {
         System.out.print("Enter the fee amount: ");
@@ -105,6 +101,7 @@ public class MainMenu {
                     userAccount.getBalance());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        }
     }
       
     public void performInterestPayment() {
@@ -141,6 +138,7 @@ public class MainMenu {
             System.out.println("Transfer successful. Your new balance: $" + userAccount.getBalance());
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
+        }
     }
       
     public void performCloseAccount() {
