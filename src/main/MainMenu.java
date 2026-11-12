@@ -83,10 +83,6 @@ public class MainMenu {
         }
         userAccount.deposit(depositAmount);
     }
-
-    public void performInterestPayment() {
-        System.out.print("Enter the interest payment amount: ");
-    }
   
     public void performFeeCollection() {
         System.out.print("Enter the fee amount: ");
@@ -105,6 +101,7 @@ public class MainMenu {
                     userAccount.getBalance());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        }
     }
       
     public void performInterestPayment() {
@@ -128,19 +125,39 @@ public class MainMenu {
     }
       
     public void performTransfer() {
+
+        if (user.getAccountNumber() < 2) {
+            System.out.println("Error: You need at least two accounts to make a transfer.");
+            return;
+        }
+
         double transferAmount = -1;
         while(transferAmount < 0) {
             System.out.print("How much would you like to transfer: ");
-            transferAmount = keyboardInput.nextInt();
+            transferAmount = keyboardInput.nextDouble(); 
         }
-        // TODO: Once the "Create additional account" feature is merged, 
-        // replace this temporary account with a lookup for a valid existing account.
-        BankAccount destinationAccount = new BankAccount();
+        
+        int destinationIndex = -1;
+        int maxIndex = user.getAccountNumber() - 1;
+        
+        while (destinationIndex < 0 || destinationIndex > maxIndex) {
+            System.out.print("Enter the destination account ID (0 to " + maxIndex + "): ");
+            destinationIndex = keyboardInput.nextInt();
+            
+            if (destinationIndex >= 0 && destinationIndex <= maxIndex && user.getAccount(destinationIndex) == userAccount) {
+                System.out.println("Error: Cannot transfer to the same active account.");
+                destinationIndex = -1;
+            }
+        }
+        
+        BankAccount destinationAccount = user.getAccount(destinationIndex);
+        
         try {
             userAccount.transfer(transferAmount, destinationAccount);
             System.out.println("Transfer successful. Your new balance: $" + userAccount.getBalance());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Error: " + e.getMessage());
+        }
     }
       
     public void performCloseAccount() {

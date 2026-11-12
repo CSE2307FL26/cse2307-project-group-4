@@ -102,7 +102,8 @@ public class BankAccountTest {
             assertEquals(100, account.getBalance(), 0.001);
         }
     }
-  
+    
+    @Test
     public void testCollectFee() {
         BankAccount account = new BankAccount();
         account.deposit(100);
@@ -151,6 +152,7 @@ public class BankAccountTest {
         }
     }
   
+    @Test
     public void testSuccessfulTransfer() {
         BankAccount sourceAccount = new BankAccount();
         BankAccount destinationAccount = new BankAccount();
@@ -222,36 +224,62 @@ public class BankAccountTest {
         }
     }
 
-    // TODO: test after finish withdraw()
-    // @Test
-    // public void testWithdrawFromClosedAccountThrowsException() {
-    //     BankAccount testAccount = new BankAccount();
-    //     testAccount.deposit(100);
-    //     testAccount.close();
+    @Test
+    public void testWithdrawFromClosedAccountThrowsException() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.close();
         
-    //     try {
-    //         // This assumes your teammate names the method "withdraw"
-    //         testAccount.withdraw(50);
-    //         fail("Should throw an exception when withdrawing from a closed account");
-    //     } catch (IllegalStateException e) {
-    //         // test passes
-    //     }
-    // }
+        try {
+            // This assumes your teammate names the method "withdraw"
+            testAccount.withdraw(50);
+            fail("Should throw an exception when withdrawing from a closed account");
+        } catch (IllegalStateException e) {
+            // test passes
+        }
+    }
 
-    // TODO: test after finish transfer()
-    // @Test
-    // public void testTransferFromClosedAccount() {
-    //     BankAccount sourceAccount = new BankAccount();
-    //     BankAccount destinationAccount = new BankAccount();
+    @Test
+    public void testTransferFromClosedAccount() {
+        BankAccount sourceAccount = new BankAccount();
+        BankAccount destinationAccount = new BankAccount();
         
-    //     sourceAccount.deposit(100);
-    //     sourceAccount.close();
+        sourceAccount.deposit(100);
+        sourceAccount.close();
         
-    //     try {
-    //         sourceAccount.transfer(50, destinationAccount);
-    //         fail("Should throw an exception when transferring from a closed account");
-    //     } catch (IllegalStateException e) {
-    //         // test passes
-    //     }
-    // }
+        try {
+            sourceAccount.transfer(50, destinationAccount);
+            fail("Should throw an exception when transferring from a closed account");
+        } catch (IllegalStateException e) {
+            // test passes
+        }
+    }
+
+    @Test
+    public void testCollectFeeFromClosedAccountThrowsException() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.close();
+        
+        try {
+            testAccount.collectFee(10);
+            fail("Should throw an exception when collecting a fee from a closed account");
+        } catch (IllegalStateException e) {
+            // test passes
+        }
+    }
+
+    @Test
+    public void testAddInterestToClosedAccountThrowsException() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.close();
+        
+        try {
+            testAccount.addInterest(5.0);
+            fail("Should throw an exception when adding interest to a closed account");
+        } catch (IllegalStateException e) {
+            // test passes
+        }
+    }
 }

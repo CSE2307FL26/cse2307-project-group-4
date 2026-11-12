@@ -28,6 +28,9 @@ public class BankAccount {
     }
   
     public void addInterest(double amount) {
+        if (this.isClosed) {
+            throw new IllegalStateException("Account is closed.");
+        }
         if (!Double.isFinite(amount) || amount <= 0) {
             throw new IllegalArgumentException(
                     "Interest must be a positive, finite amount.");
@@ -37,6 +40,9 @@ public class BankAccount {
     }
   
     public void withdraw(double amount) {
+        if (this.isClosed) {
+            throw new IllegalStateException("Cannot withdraw from a closed account.");
+        }
         if(amount > 0 && amount <= this.balance) {
             this.balance -= amount;
         } else {
@@ -45,6 +51,9 @@ public class BankAccount {
     }
 
     public void collectFee(double amount) {
+        if (this.isClosed) {
+            throw new IllegalStateException("Account is closed.");
+        }
         if (!Double.isFinite(amount) || amount <= 0) {
             throw new IllegalArgumentException(
                     "Fee must be a positive, finite amount.");
@@ -63,6 +72,9 @@ public class BankAccount {
     }
 
     public void transfer(double amount, BankAccount destination) {
+        if (this.isClosed) {
+            throw new IllegalStateException("Cannot transfer from a closed account.");
+        }
         if (amount <= 0) {
             throw new IllegalArgumentException("Transfer amount must be positive.");
         }
