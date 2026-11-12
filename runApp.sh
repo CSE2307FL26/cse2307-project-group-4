@@ -6,11 +6,6 @@ set -euo pipefail
 # Resolve paths from this script, even when invoked outside the project directory.
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
 
-# A JDK supplies both the compiler and the Java runtime.
-if ! command -v javac >/dev/null 2>&1 || ! command -v java >/dev/null 2>&1; then
-    echo "Error: install a JDK and put javac and java on your PATH." >&2
-    exit 1
-fi
 
 # Use fresh compiled classes and remove them when the application exits.
 build_dir=$(mktemp -d "${TMPDIR:-/tmp}/bank-app.XXXXXX")
