@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 6;
-    private static final int MAX_SELECTION = 6;
-
+    private static final int EXIT_SELECTION = 10;
+	  private static final int MAX_SELECTION = 10;
+    
     private BankUser user;
     private BankAccount userAccount;
     private Scanner keyboardInput;
@@ -26,7 +26,11 @@ public class MainMenu {
         System.out.println("3. Check account balance");
         System.out.println("4. View transaction history");
         System.out.println("5. Create an additional account");
-        System.out.println("6. Exit the app");
+        System.out.println("6. Close an existing account"); 
+        System.out.println("7. Transfer money");
+        System.out.println("8. Collect an account fee (administrator)");
+        System.out.println("9. Add an interest payment (administrator)");
+        System.out.println("10. Exit the app");
 
     }
 
@@ -56,6 +60,18 @@ public class MainMenu {
             case 5:
                 performCreateAccount();
                 break;
+            case 6:
+                performCloseAccount();
+                break;
+            case 7:
+                performTransfer();
+                break;
+            case 8:
+                performFeeCollection();
+                break;
+            case 9:
+                performInterestPayment();
+                break;
         }
     }
 
@@ -68,6 +84,70 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performInterestPayment() {
+        System.out.print("Enter the interest payment amount: ");
+    }
+  
+    public void performFeeCollection() {
+        System.out.print("Enter the fee amount: ");
+
+        if (!keyboardInput.hasNextDouble()) {
+            keyboardInput.next();
+            System.out.println("Please enter a number.");
+            return;
+        }
+
+        double amount = keyboardInput.nextDouble();
+
+        try {
+            userAccount.collectFee(amount);
+            System.out.printf("Fee collected. Balance: $%.2f%n",
+                    userAccount.getBalance());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+    }
+      
+    public void performInterestPayment() {
+        System.out.print("Enter the interest payment amount: ");
+
+        if (!keyboardInput.hasNextDouble()) {
+            keyboardInput.next();
+            System.out.println("Please enter a number.");
+            return;
+        }
+
+        double amount = keyboardInput.nextDouble();
+
+        try {
+            userAccount.addInterest(amount);
+            System.out.printf("Interest added. Balance: $%.2f%n",
+                    userAccount.getBalance());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+      
+    public void performTransfer() {
+        double transferAmount = -1;
+        while(transferAmount < 0) {
+            System.out.print("How much would you like to transfer: ");
+            transferAmount = keyboardInput.nextInt();
+        }
+        // TODO: Once the "Create additional account" feature is merged, 
+        // replace this temporary account with a lookup for a valid existing account.
+        BankAccount destinationAccount = new BankAccount();
+        try {
+            userAccount.transfer(transferAmount, destinationAccount);
+            System.out.println("Transfer successful. Your new balance: $" + userAccount.getBalance());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+    }
+      
+    public void performCloseAccount() {
+        userAccount.close();
+        System.out.println("Account successfully closed.");
+    }
+  
     public void performCreateAccount() {
         user.createAccount();
 
