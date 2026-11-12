@@ -29,6 +29,7 @@ public class MainMenu {
         System.out.println("6. Close an existing account"); 
         System.out.println("7. Transfer money");
         System.out.println("8. Collect an account fee (administrator)");
+        System.out.println("9. Add an interest payment (administrator)");
         System.out.println("10. Exit the app");
 
     }
@@ -68,6 +69,9 @@ public class MainMenu {
             case 8:
                 performFeeCollection();
                 break;
+            case 9:
+                performInterestPayment();
+                break;
         }
     }
 
@@ -80,6 +84,10 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performInterestPayment() {
+        System.out.print("Enter the interest payment amount: ");
+    }
+  
     public void performFeeCollection() {
         System.out.print("Enter the fee amount: ");
 
@@ -97,6 +105,26 @@ public class MainMenu {
                     userAccount.getBalance());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+    }
+      
+    public void performInterestPayment() {
+        System.out.print("Enter the interest payment amount: ");
+
+        if (!keyboardInput.hasNextDouble()) {
+            keyboardInput.next();
+            System.out.println("Please enter a number.");
+            return;
+        }
+
+        double amount = keyboardInput.nextDouble();
+
+        try {
+            userAccount.addInterest(amount);
+            System.out.printf("Interest added. Balance: $%.2f%n",
+                    userAccount.getBalance());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
       
     public void performTransfer() {
