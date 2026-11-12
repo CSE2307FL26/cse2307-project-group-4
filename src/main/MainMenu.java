@@ -28,6 +28,7 @@ public class MainMenu {
         System.out.println("5. Create an additional account");
         System.out.println("6. Close an existing account"); 
         System.out.println("7. Transfer money");
+        System.out.println("8. Collect an account fee (administrator)");
         System.out.println("10. Exit the app");
 
     }
@@ -64,6 +65,9 @@ public class MainMenu {
             case 7:
                 performTransfer();
                 break;
+            case 8:
+                performFeeCollection();
+                break;
         }
     }
 
@@ -76,6 +80,25 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performFeeCollection() {
+        System.out.print("Enter the fee amount: ");
+
+        if (!keyboardInput.hasNextDouble()) {
+            keyboardInput.next();
+            System.out.println("Please enter a number.");
+            return;
+        }
+
+        double amount = keyboardInput.nextDouble();
+
+        try {
+            userAccount.collectFee(amount);
+            System.out.printf("Fee collected. Balance: $%.2f%n",
+                    userAccount.getBalance());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+    }
+      
     public void performTransfer() {
         double transferAmount = -1;
         while(transferAmount < 0) {
