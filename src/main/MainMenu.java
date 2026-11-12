@@ -5,14 +5,16 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 5;
-    private static final int MAX_SELECTION = 5;
-
+    private static final int EXIT_SELECTION = 6;
+    private static final int MAX_SELECTION = 6;
+    
+    private BankUser user;
     private BankAccount userAccount;
     private Scanner keyboardInput;
 
     public MainMenu() {
-        this.userAccount = new BankAccount();
+        this.user = new BankUser();
+        this.userAccount = user.getAccount(0);
         this.keyboardInput = new Scanner(System.in);
     }
 
@@ -23,7 +25,8 @@ public class MainMenu {
         System.out.println("2. Make a withdrawal");
         System.out.println("3. Check account balance");
         System.out.println("4. View transaction history");
-        System.out.println("5. Exit the app");
+        System.out.println("5. Create an additional account");
+        System.out.println("6. Exit the app");
 
     }
 
@@ -50,6 +53,9 @@ public class MainMenu {
             case 4: 
                 viewTransactionHistory();
                 break;
+            case 5:
+                performCreateAccount();
+                break;
         }
     }
 
@@ -62,6 +68,14 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performCreateAccount() {
+        user.createAccount();
+
+        System.out.println("Account created successfully!");
+        System.out.println("You now have "
+            + user.getAccountNumber() + " accounts.");
+    }
+  
     public void viewTransactionHistory() {
         List<Transaction> history = userAccount.getTransactionHistory();
 
