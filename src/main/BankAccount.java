@@ -45,6 +45,7 @@ public class BankAccount {
         }
         if(amount > 0 && amount <= this.balance) {
             this.balance -= amount;
+            transactions.add(new Transaction("Withdrawal", amount));
         } else {
             throw new IllegalArgumentException();
         }
