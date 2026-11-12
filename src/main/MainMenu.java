@@ -54,7 +54,7 @@ public class MainMenu {
             case 3:
                 displayBalance();
                 break;
-            case 4: 
+            case 4:
                 viewTransactionHistory();
                 break;
             case 5:
@@ -153,9 +153,9 @@ public class MainMenu {
 
         System.out.println("Account created successfully!");
         System.out.println("You now have "
-            + user.getAccountNumber() + " accounts.");
+                + user.getAccountNumber() + " accounts.");
     }
-  
+
     public void viewTransactionHistory() {
         List<Transaction> history = userAccount.getTransactionHistory();
 
@@ -170,11 +170,20 @@ public class MainMenu {
             System.out.println(transaction);
         }
     }
-  
-    public void displayBalance() {
-        System.out.printf("Current balance: " + userAccount.getBalance());
+
+    private BankAccount selectAccount() {
+        System.out.println("Choose an account from 1 to " + user.getAccountNumber());
+
+        int selection = getUserSelection(user.getAccountNumber());
+        return user.getAccount(selection - 1);
     }
-     
+
+    public void displayBalance() {
+        BankAccount selectedAccount = selectAccount();
+
+        System.out.println("Current balance: " + selectedAccount.getBalance());
+    }
+
     public void performWithdrawal() {
         double withdrawalAmount = -1;
 
