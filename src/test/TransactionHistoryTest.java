@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class TransactionHistoryTest {
-    
-    @Test 
+
+    @Test
     public void testDepositTransaction() {
         BankAccount account = new BankAccount();
         account.deposit(50);
@@ -44,5 +44,19 @@ public class TransactionHistoryTest {
 
         assertEquals(1, AccountOne.getTransactionHistory().size());
         assertTrue(AccountTwo.getTransactionHistory().isEmpty());
+    }
+
+    @Test
+    public void testWithdrawalTransaction() {
+        BankAccount account = new BankAccount();
+        account.deposit(100);
+
+        account.withdraw(40);
+
+        List<Transaction> history = account.getTransactionHistory();
+
+        assertEquals(2, history.size());
+        assertEquals("Withdrawal", history.get(1).getType());
+        assertEquals(40.0, history.get(1).getAmount(), 0.01);
     }
 }
