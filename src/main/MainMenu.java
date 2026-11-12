@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 6;
-    private static final int MAX_SELECTION = 6;
+    private static final int EXIT_SELECTION = 10;
+	  private static final int MAX_SELECTION = 10;
     
     private BankUser user;
     private BankAccount userAccount;
@@ -26,7 +26,8 @@ public class MainMenu {
         System.out.println("3. Check account balance");
         System.out.println("4. View transaction history");
         System.out.println("5. Create an additional account");
-        System.out.println("6. Exit the app");
+        System.out.println("6. Close an existing account"); 
+        System.out.println("10. Exit the app");
 
     }
 
@@ -56,6 +57,9 @@ public class MainMenu {
             case 5:
                 performCreateAccount();
                 break;
+            case 6:
+                performCloseAccount();
+                break;
         }
     }
 
@@ -68,6 +72,11 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performCloseAccount() {
+        userAccount.close();
+        System.out.println("Account successfully closed.");
+    }
+  
     public void performCreateAccount() {
         user.createAccount();
 

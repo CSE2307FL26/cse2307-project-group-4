@@ -7,6 +7,7 @@ import java.util.List;
 public class BankAccount {
 
     private double balance;
+    private boolean isClosed;
     private List<Transaction> transactions;
 
     public BankAccount() {
@@ -15,6 +16,9 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
+        if (this.isClosed) {
+            throw new IllegalStateException("Cannot deposit into a closed account.");
+        }
         if(amount > 0) {
             this.balance += amount;
             transactions.add(new Transaction("Deposit", amount));
@@ -35,6 +39,14 @@ public class BankAccount {
         return this.balance;
     }
 
+    public void close() {
+        this.isClosed = true;
+    }
+
+    public boolean isClosed() {
+        return this.isClosed;
+    }
+  
     public List<Transaction> getTransactionHistory() {
         return Collections.unmodifiableList(transactions);
     }
